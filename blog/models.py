@@ -7,6 +7,9 @@ from django.contrib.auth import settings
 # from django import forms
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
+
+from PIL import Image, ImageChops
+
 # Create your models here.
 
 
@@ -54,6 +57,8 @@ class Tag(models.Model):
 
 
 class Blog(models.Model):
+    blogImage = models.ImageField(null=True,
+                                  upload_to='blog_pictures')
     title = models.CharField(max_length=120)
     content = RichTextUploadingField(blank=True, null=True)
     status = models.BooleanField(default=True)
@@ -71,6 +76,43 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        img = Image.open(self.blogImage.path)
+
+        if img.height > 1024 and img.width > 1024:
+            output_size = (1024, 640)
+            #
+            # left = 155
+            # top = 65
+            # right = 360
+            # bottom = 270
+            width, height = img.size
+
+            if height > width:
+                delta = height - width
+                left = int(delta / 4)
+                upper = 0
+                right = height + left
+                lower = height
+            else:
+                delta = width - height
+                left = 0
+                upper = int(delta / 4)
+                right = width
+                lower = width + upper
+
+            img.thumbnail(output_size)
+            img1 = img.crop((left, upper, right, lower))
+            img.save(self.image.path)
+
+    # def image_tag(self):
+    #     from django.utils.html import format_html
+    #     return format_html('<img src="{}" />'.format(self.blogImage.url))
+    # image_tag.short_description = 'blogImage'
+    # image_tag.allow_tags = True
 
 
 # class BlogTag(models.Model):

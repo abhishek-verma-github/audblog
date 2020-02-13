@@ -7,6 +7,10 @@ from django.contrib.auth import get_user_model
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'created_on', 'category')
     list_filter = ('created_on', 'category')
+    
+    # fields = ('image_tag', 'title', 'content', 'status',
+    #           'created_on', 'updated_on', 'category', 'tags', 'author')
+    # readonly_fields = ('image_tag',)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'author':
