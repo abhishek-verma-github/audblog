@@ -1,25 +1,18 @@
-{% extends 'blog/base.html' %} 
+{% extends 'blog/base.html' %} {% block content %} {% for blog in blogs%}
 
-
-{% block content %} 
-
-{% for post in posts%}
-<!-- 
 <article class="media content-section">
-  <img
-    class="rounded-circle article-img" src="{{ post.profile.image }}"/>
+
+  <img class="rounded-circle article-img" src="{{ blog.blogImage }}" />
+  
   <div class="media-body">
     <div class="article-metadata">
-      <a class="mr-2" href="#">{{ post.author.username }}</a>
-      <small class="text-muted">{{ post.date_posted  }}</small>
+      <a class="mr-2" href="#">{{ blog.author.username }}</a>
+      <small class="text-muted">{{ blog.date_posted }}</small>
     </div>
     <h2>
-      <a class="article-title" href="{% url 'post-detail' post.id %}"
-        >{{ post.title }}</a
-      >
+      <a class="article-title" href="#">{{ blog.title }}</a>
     </h2>
-    <p class="article-content">{{ post.content }}</p>
+    <p class="article-content">{{ blog.content|safe }}</p>
   </div>
-</article> -->
-{% endfor %}
-{% endblock content %}
+</article>
+{% endfor %} {% endblock content %}

@@ -21,11 +21,11 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
-    path('ckeditor/', include('ckeditor_uploader.urls'))
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('api/users/', include('users.api.api_urls')),
+    path('api/blogs/', include('blog.api.api_urls')),
+
 ]
-
-
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)

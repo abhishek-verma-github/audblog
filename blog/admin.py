@@ -7,11 +7,12 @@ from django.contrib.auth import get_user_model
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'created_on', 'category')
     list_filter = ('created_on', 'category')
-    
+
     # fields = ('image_tag', 'title', 'content', 'status',
     #           'created_on', 'updated_on', 'category', 'tags', 'author')
     # readonly_fields = ('image_tag',)
 
+    # to get the current logged in user in admin panel-------------------------------------------
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'author':
             kwargs['queryset'] = get_user_model().objects.filter(
@@ -28,9 +29,10 @@ class BlogAdmin(admin.ModelAdmin):
         data['author'] = request.user
         request.GET = data
         return super(BlogAdmin, self).add_view(request, form_url="", extra_context=extra_context)
+    # --------------------------------------------------------------------------------------------
 
 
-admin.site.site_header = 'AudBlog Admin Panel'
+admin.site.site_header = 'Audblog Admin Panel'
 admin.site.register(Category)
 admin.site.register(ChildCategory)
 admin.site.register(Tag)

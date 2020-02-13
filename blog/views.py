@@ -7,6 +7,6 @@ def home(request):
 
     blogs = Blog.objects.all()
     context = {
-        'posts': blogs
+        'blogs': blogs
     }
     return render(request, 'blog/home.html', context)
