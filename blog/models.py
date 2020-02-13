@@ -12,7 +12,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 class Category(models.Model):
     title = models.CharField(max_length=30)
-    status = models.BooleanField()
+    status = models.BooleanField(default=True)
     created_on = models.DateTimeField(default=timezone.now)
     updated_on = models.DateTimeField(default=timezone.now, null=True)
 
@@ -27,7 +27,7 @@ class Category(models.Model):
 class ChildCategory(models.Model):
     title = models.CharField(max_length=120)
     parent_category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    status = models.BooleanField()
+    status = models.BooleanField(default=True)
     created_on = models.DateTimeField(default=timezone.now)
     updated_on = models.DateTimeField(default=timezone.now, null=True)
 
@@ -41,7 +41,7 @@ class ChildCategory(models.Model):
 
 class Tag(models.Model):
     title = models.CharField(max_length=20)
-    status = models.BooleanField()
+    status = models.BooleanField(default=True)
     created_on = models.DateTimeField(default=timezone.now)
     updated_on = models.DateTimeField(default=timezone.now, null=True)
 
@@ -56,7 +56,7 @@ class Tag(models.Model):
 class Blog(models.Model):
     title = models.CharField(max_length=120)
     content = RichTextUploadingField(blank=True, null=True)
-    status = models.BooleanField()
+    status = models.BooleanField(default=True)
     created_on = models.DateTimeField(default=timezone.now)
     updated_on = models.DateTimeField(default=timezone.now, null=True)
     author = models.ForeignKey(
